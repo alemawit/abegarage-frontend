@@ -1,5 +1,5 @@
 //import Routes and Route from react-router-dom
-import { Routes, Route, Router } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 //import the components
 import Home from "./markup/pages/Home";
 import Login from "./markup/pages/Login";

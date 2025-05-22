@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import loginService from "../../../services/login.service.jsx";
 import "./LoginForm.css"; // Make sure to import your CSS file
@@ -14,11 +14,12 @@ function LoginForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // Handle client side validations here
-    let valid = true; // Flag
+
+    let valid = true; // Flag for form validity
+
     // Email validation
     if (!employee_email) {
-      setEmailError("Please enter your email address first");
+      setEmailError("Please enter your email address.");
       valid = false;
     } else if (!employee_email.includes("@")) {
       setEmailError("Invalid email format");
@@ -31,54 +32,52 @@ function LoginForm() {
         setEmailError("");
       }
     }
-    // Password has to be at least 6 characters long
+
+    // Password validation (at least 6 characters)
     if (!employee_password || employee_password.length < 6) {
       setPasswordError("Password must be at least 6 characters long");
       valid = false;
     } else {
       setPasswordError("");
     }
+
     if (!valid) {
       return;
     }
-    // Handle form submission here
+
+    // Handle form submission
     const formData = {
       employee_email,
       employee_password,
     };
     console.log(formData);
-    // Call the service
-    const loginEmployee = loginService.logIn(formData);
-    console.log(loginEmployee);
-    loginEmployee
-      .then((response) => response.json())
+
+    // Call the login service
+    loginService
+      .logIn(formData)
       .then((response) => {
         console.log(response);
+
         if (response.status === "success") {
-          // Save the user in the local storage
+          // Save the user data to local storage
           if (response.data.employee_token) {
             console.log(response.data.employee_token);
             localStorage.setItem("employee", JSON.stringify(response.data));
           }
-          // Redirect the user to the dashboard
-          // navigate('/admin');
-          console.log(location);
+
+          // Redirect the user to the dashboard or previous page
           if (location.pathname === "/login") {
-            // navigate('/admin');
-            // window.location.replace('/admin');
-            // To home for now
             window.location.replace("/admin");
           } else {
             window.location.reload();
           }
         } else {
-          // Show an error message
-          setServerError(response.message);
+          setServerError(response.message); // Show server error
         }
       })
       .catch((err) => {
         console.log(err);
-        setServerError("An error has occurred. Please try again later." + err);
+        setServerError("An error has occurred. Please try again later.");
       });
   };
 

@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 import {
   Form,
   Table,
-  Button,
+ 
   ListGroup,
   FormCheck,
   Card,
   Spinner,
-  Badge,
+  
 } from "react-bootstrap";
 import { useAuth } from "../../../../Contexts/AuthContext";
 import DetailCard from "../DetailCard/DetailCard";
